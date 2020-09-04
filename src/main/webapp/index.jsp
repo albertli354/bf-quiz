@@ -42,9 +42,6 @@
           </c:if>
         </ul>
         <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="#">Contact us</a>
-          </li>
           <c:if test='${not empty sessionScope.user}'>
 	          <li class="nav-item">
 	            <a class="nav-link" href="#">${sessionScope.user}</a>
