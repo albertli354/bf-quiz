@@ -18,6 +18,7 @@ public class Quiz {
 	private Map<Integer, String> choiceMap;
 	private Map<Integer, LinkedList<Integer>> questionChoice; 
 	private int currentQuestionIndex;
+	
 	// id is question id, value is choice id
 	private Map<Integer, Integer> userChoice;
 	private int[] questionID;
@@ -41,9 +42,10 @@ public class Quiz {
 		
 		// initialize all choice to -1
 		// 5 means 5 questions
-		for (int i = 0; i < 5; i++) {
-			userChoice.put(i, -1);
+		for (int questionID : questionMap.keySet()) {
+			userChoice.put(questionID, -1);
 		}
+
 		
 		// initialize quesitonIndex
 		questionID = new int[5];

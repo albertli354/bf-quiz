@@ -27,7 +27,7 @@
 <body> 
  
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <a class="navbar-brand" href="#">Home</a>
+      <a class="navbar-brand" href="/quiz">Home</a>
       <button
         class="navbar-toggler"
         type="button"
@@ -88,8 +88,15 @@
 	            
 	            <div style="padding=top: 3rem" class="form-check">
 	              <c:forEach var="choiceID" items="${pageScope.quiz.getChoices(pageScope.questionID)}">
-	                <input class="form-check-input choice" type="radio" name="userAnswer" id="questionChoice" value="${pageScope.choiceID}" />
-	                <label for="${pageScope.quiz.getSingleChoice(choiceID)}">${pageScope.quiz.getSingleChoice(choiceID)}</label>
+	                <c:set var="userSelection" value="${sessionScope.currentQuiz.getUserChoice().get(pageScope.questionID)}" scope="page" />
+	                <c:if test="${pageScope.userSelection == -1 or pageScope.choiceID != pageScope.userSelection}">
+		                <input class="form-check-input choice" type="radio" name="userAnswer" id="questionChoice" value="${pageScope.choiceID}" />
+		                <label for="${pageScope.quiz.getSingleChoice(choiceID)}">${pageScope.quiz.getSingleChoice(choiceID)}</label>
+	                </c:if>
+	                <c:if test="${pageScope.userSelection != -1 and pageScope.choiceID == pageScope.userSelection}">
+		                <input class="form-check-input choice" type="radio" name="userAnswer" id="questionChoice" value="${pageScope.userSelection}" checked />
+		                <label for="${pageScope.quiz.getSingleChoice(choiceID)}">${pageScope.quiz.getSingleChoice(choiceID)}</label>
+	                </c:if>
 	              	<br>	             
 	               </c:forEach>
 	            </div>
@@ -117,6 +124,7 @@
 		    </form>
    		 </div>		
 		</c:if>
+		<!-- quiz result detail -->
 		<div class="container">
 		<c:if test='${sessionScope.finished == true }'>
 			
