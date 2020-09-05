@@ -40,6 +40,7 @@ public class ExamServlet extends HttpServlet {
 	private Map<Integer, String> questionMap;
 	private Map<Integer, String> choiceMap;
 	private Map<Integer, LinkedList<Integer>> questionChoice;
+	private Map<Integer, Integer> correctAnswers;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
@@ -70,6 +71,9 @@ public class ExamServlet extends HttpServlet {
 			// key is quesitonID, value is choice id
 			questionChoice = quizDao.getMapping(questionMap);
 			
+			// get correct answers
+			correctAnswers = quizDao.getCorrectAnswers(questionMap);
+			
 			
 			// pass time
 			long now = System.currentTimeMillis();
@@ -91,7 +95,7 @@ public class ExamServlet extends HttpServlet {
 			// create Quiz object
 			Quiz currentQuiz = new Quiz(quizType, currentTime, endTime, userID, quizID, 
 					questionMap, choiceMap, questionChoice, currentQuestionIndex,
-					userChoice);
+					userChoice, correctAnswers);
 			
 			
 

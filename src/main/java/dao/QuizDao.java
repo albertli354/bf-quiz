@@ -21,6 +21,7 @@ public class QuizDao {
 	private final static String NEW_QUIZ = "insert into quiz (userID, questionID, quizType, startTime, choiceID, quizID) values (?,?,?,?,?,?)";
 	private final static String MAX_ID = "select max(quizID) from quiz";
 	private final static String CORRECT_ANSWER = "select choice_id from choice where questionID = ? and isCorrect = 1";
+	
 	Connection connection = DBConnection.getConnection();
 	
 	public Map<Integer, String> getQuestionMap(Quiz quiz) {
@@ -176,7 +177,7 @@ public class QuizDao {
 	private int getCorrectChoiceID(int questionID) {
 		int correctChoiceID = 0;
 		PreparedStatement preparedStatement = null;
-		 try {
+		try {
 			preparedStatement = connection.prepareStatement(CORRECT_ANSWER);
 			preparedStatement.setInt(1, questionID);
 			boolean result = preparedStatement.execute();
@@ -191,6 +192,31 @@ public class QuizDao {
 			e.printStackTrace();
 		} 
 		return correctChoiceID;
+	}
+	
+	public Map<Integer, Integer> getCorrectAnswers(Map<Integer, String> questionMap) {
+		Map<Integer, Integer> resultMap = new HashMap<>();
+		PreparedStatement preparedStatement = null;
+		int correctChoiceID = -1;
+		for (int questionID : questionMap.keySet()) {
+			try {
+				preparedStatement = connection.prepareStatement(CORRECT_ANSWER);
+				preparedStatement.setInt(1, questionID);
+				boolean result = preparedStatement.execute();
+				if (result) {
+					ResultSet resultSet = preparedStatement.getResultSet();
+					while (resultSet.next()) {
+						correctChoiceID = resultSet.getInt(1);
+					}
+					resultMap.put(questionID, correctChoiceID);
+					resultSet.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return resultMap;
 	}
 	
 }

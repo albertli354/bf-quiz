@@ -1,10 +1,7 @@
 package domain;
 
-import java.sql.Time;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
+
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 
 public class Quiz {
@@ -17,6 +14,7 @@ public class Quiz {
 	private Map<Integer, String> questionMap;
 	private Map<Integer, String> choiceMap;
 	private Map<Integer, LinkedList<Integer>> questionChoice; 
+	private Map<Integer, Integer> correctAnswers;
 	private int currentQuestionIndex;
 	
 	// id is question id, value is choice id
@@ -28,7 +26,7 @@ public class Quiz {
 	
 	public Quiz(String quizType, String startTime, String endTime, int userID, int quizID, Map<Integer, String> questionMap,
 			Map<Integer, String> choiceMap, Map<Integer, LinkedList<Integer>> questionChoice, int currentQuestionIndex,
-			Map<Integer, Integer> userChoice) {
+			Map<Integer, Integer> userChoice, Map<Integer, Integer> correctAnswers) {
 		this.quizType = quizType;
 		this.startTime = startTime;
 		this.endTime = endTime;
@@ -39,6 +37,7 @@ public class Quiz {
 		this.questionChoice = questionChoice;
 		this.currentQuestionIndex = currentQuestionIndex;
 		this.userChoice = userChoice;
+		this.correctAnswers = correctAnswers;
 		
 		// initialize all choice to -1
 		// 5 means 5 questions
@@ -119,6 +118,10 @@ public class Quiz {
 
 	public Map<Integer, LinkedList<Integer>> getQuestionChoice() {
 		return questionChoice;
+	}
+
+	public Map<Integer, Integer> getCorrectAnswers() {
+		return correctAnswers;
 	}
 	
 	

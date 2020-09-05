@@ -59,8 +59,18 @@ public class UpdateQuiz extends HttpServlet {
 			
 			
 			// calculate grade for the result
-			
+			Map<Integer, Integer> correctAnswers  = currentQuiz.getCorrectAnswers();
+			Map<Integer, Integer> userChoice  = currentQuiz.getUserChoice();
+			int grade = 0;
+			for (int questionID : correctAnswers.keySet()) {
+				if (correctAnswers.get(questionID) == userChoice.get(questionID)) {
+					grade++;
+				}
+			}
+			// set grade
+			session.setAttribute("grade", grade);
 			// insert quiz result to database
+			
 //			quizResultDao.add(currentQuiz);
 		}
 		

@@ -86,7 +86,7 @@
 	            </h4>
 	            </div>
 	            
-	            <div style="padding=top: 3rem" class="form-check">
+	            <div style="padding-top: 0.5rem" class="form-check">
 	              <c:forEach var="choiceID" items="${pageScope.quiz.getChoices(pageScope.questionID)}">
 	                <c:set var="userSelection" value="${sessionScope.currentQuiz.getUserChoice().get(pageScope.questionID)}" scope="page" />
 	                <c:if test="${pageScope.userSelection == -1 or pageScope.choiceID != pageScope.userSelection}">
@@ -125,38 +125,56 @@
    		 </div>		
 		</c:if>
 		<!-- quiz result detail -->
-		<div class="container">
-		<c:if test='${sessionScope.finished == true }'>
-			
+		<!-- <div class="container"> -->
+		  <c:if test='${sessionScope.finished == true }'>
+			<div class="container">
+			  <p>Your quiz ID is ${sessionScope.quizID}</p>
+      	      <p>Time taken: ${sessionScope.currentQuiz.getStartTime()}</p>
+      	      <p>Quiz grade: ${sessionScope.grade} / 5</p>
 			<c:forEach var="questionID" items="${sessionScope.currentQuiz.getQuestionMap()}">
+			  <c:set var="correctID" value="${sessionScope.currentQuiz.getCorrectAnswers().get(questionID.key)}" scope="page" />
 			  <form>
-			   <div class="card-deck mb-3 text-center">
+			  <div class="card-deck mb-3 text-center">
 		        <div class="card mb-4 shadow-sm">
 		          <div class="card-header">
-		          	<h4 class="my-0 font-weight-normal">
-		          		<c:out value="${sessionScope.currentQuiz.getQuestionTitle(questionID.key)}"/>
+		            <h4 class="my-0 font-weight-normal">
+		            	<c:out value="${sessionScope.currentQuiz.getQuestionTitle(questionID.key)}"/>
           			</h4>
-	          		<div style="padding=top: 3rem" class="form-check">
+          			</div>
+	          		<div style="padding-top: 0.5rem" class="form-check">
 		              <c:forEach var="choiceID" items="${sessionScope.currentQuiz.getChoices(questionID.key)}">
-		               <c:if test="${sessionScope.currentQuiz.getUserChoice().get(questionID.key) == choiceID }"> 
+		               <c:set var="userChoice" value="${sessionScope.currentQuiz.getUserChoice().get(questionID.key)}" scope="page" />
+		               <c:if test="${pageScope.userChoice == choiceID and pageScope.userChoice == pageScope.correctID }"> 
+			                <input disabled class="form-check-input choice" type="radio" name="${questionID.key}" id="questionChoice" value="${choiceID}" checked/>
+			                <label style="background-color:green" for="${sessionScope.currentQuiz.getSingleChoice(choiceID)}">${sessionScope.currentQuiz.getSingleChoice(choiceID)}</label>
+			              	<br>
+		              	</c:if>
+		              	<c:if test="${pageScope.userChoice == choiceID and pageScope.userChoice != pageScope.correctID }"> 
 			                <input disabled class="form-check-input choice" type="radio" name="${questionID.key}" id="questionChoice" value="${choiceID}" checked/>
 			                <label for="${sessionScope.currentQuiz.getSingleChoice(choiceID)}">${sessionScope.currentQuiz.getSingleChoice(choiceID)}</label>
 			              	<br>
 		              	</c:if>
-		              	<c:if test="${sessionScope.currentQuiz.getUserChoice().get(questionID.key) != choiceID }">
+		              	<c:if test="${pageScope.userChoice != choiceID and choiceID != pageScope.correctID }">
 			                <input disabled class="form-check-input choice" type="radio" name="${questionID.key}" id="questionChoice" value="${choiceID}"/>
 			                <label for="${sessionScope.currentQuiz.getSingleChoice(choiceID)}">${sessionScope.currentQuiz.getSingleChoice(choiceID)}</label>
 			              	<br>
-		              	 </c:if>    
+		              	 </c:if>
+		              	 <c:if test="${pageScope.userChoice != choiceID and choiceID == pageScope.correctID }">
+			                <input disabled class="form-check-input choice" type="radio" name="${questionID.key}" id="questionChoice" value="${choiceID}"/>
+			                <label style="background-color:green" for="${sessionScope.currentQuiz.getSingleChoice(choiceID)}">${sessionScope.currentQuiz.getSingleChoice(choiceID)}</label>
+			              	<br>
+		              	 </c:if>
 		               </c:forEach>
 		            </div>
-		          </div>
+		            <c:if test="${  pageScope.userChoice == pageScope.correctID }"><div class="alert alert-success" role="alert">You got it right</div></c:if>
+		            <c:if test="${  pageScope.userChoice != pageScope.correctID }"><div class="alert alert-danger" role="alert">You got it wrong</div></c:if>
 	          	</div>
          	   </div>
          	   </form>
 			</c:forEach>
+			</div>
 		</c:if>
-		</div>
+		<!-- </div> -->
 	</div>
 
 	
