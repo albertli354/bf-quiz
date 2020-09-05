@@ -5,11 +5,15 @@
 <html>
 <head>
 <meta charset="UTF-8">
- <link
+<link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
  />
-<title>Admin portal</title>
+<link rel="stylesheet" href="http://cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css" />
+<style>
+
+</style>
+<title>User details</title>
 </head>
 <body>
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -38,6 +42,11 @@
             <a class="nav-link" href="/quiz/pages/signup.jsp">Register</a>
           </li>
           </c:if>
+          <c:if test='${not empty sessionScope.user and sessionScope.user == "admin"}'>
+          <li class="nav-item">
+            <a class="nav-link" href="pages/admin.jsp"
+              >Admin Portal</a>
+          </c:if>
         </ul>
         <ul class="navbar-nav ml-auto">
           <c:if test='${not empty sessionScope.user}'>
@@ -52,40 +61,48 @@
   		
       </div>
     </nav>
-    <div class="jumbotron">
-    <div class="container">
-      <h1 class="display-3">Hello, administrator!</h1>
-      <p>This is the place where you can manage this web application, including managing users, quizzes, and questions.</p>
-      <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p>
-    </div>
-  	</div>
-    <div class="container">
-    <!-- Example row of columns -->
-    <div class="row">
-      <div class="col-md-4">
-        <h2>Users</h2>
-        <p>Viewing all users' profile and managing their status.</p>
-        <p><a class="btn btn-secondary" href="/quiz/AdminUsersServlet" role="button">View details &raquo;</a></p>
+	<div class="container">
+	<h1 class="text-center" style="padding-top: 2rem">All users profile</h1> 
+	<div class="table-responsive" style="padding-top: 3rem">
+	<table id="myTable" class="display table">  
+        <thead>  
+          <tr>  
+            <th>user ID</th>  
+            <th>user name</th>  
+            <th>user type</th>  
+            <th>status</th>
+            <th>manage user</th>  
+          </tr>  
+        </thead>  
+        <tbody>
+        	<c:forEach items="${requestScope.users}" var="element" >  
+	          <tr>  
+	            <td>${element.getUserID()}</td>  
+	            <td>${element.getUserName()}</td>
+	            <c:if test="${ element.getUserType() != 1}">
+	            	<td>normal user</td>
+	            </c:if>  
+	            <c:if test="${ element.getUserType() == 1}">
+	            	<td>administrator</td>
+	            </c:if>
+	            <c:if test="${ element.getIsActive() == 0}">
+	            	<td>inactive</td>
+	            </c:if>  
+	            <c:if test="${ element.getIsActive() == 1}">
+	            	<td>active</td>
+	            </c:if>
+	            <td>
+	            	<div class="custom-control custom-switch">
+	  					<input type="checkbox" class="custom-control-input" id="customSwitch1" checked>
+	  					<label class="custom-control-label" for="customSwitch1"></label>
+	  				</div>
+	  			</td>
+  			</c:forEach>  
+        </tbody>  
+      </table>
       </div>
-      <div class="col-md-4">
-        <h2>Quizzes</h2>
-        <p>Checking all quizzes and detailed results of them.</p>
-        <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
       </div>
-      <div class="col-md-4">
-        <h2>Questions</h2>
-        <p>Managing all questions here, including add/update/disable questions.</p>
-        <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
-      </div>
-    </div>
 
-    <hr>
-
-  </div>
-    
-    
-    
-    
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script
       src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
@@ -96,5 +113,11 @@
     <script type="text/javascript"
  	src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js">
     </script>
+	<script type="text/javascript" src="http://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
+	<script>
+	$(document).ready(function(){
+	    $('#myTable').dataTable();
+	});
+	</script>
 </body>
 </html>

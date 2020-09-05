@@ -81,10 +81,13 @@ public class User {
 	public void setIsActive(int isActive) {
 		this.isActive = isActive;
 	}
-	
+
 	@Override
-    public String toString() {
-        return "User [id=" + userID + ", username=" + userName + "]";
-    }
+	public String toString() {
+		return "User [userID=" + userID + ", userName=" + userName + ", userType=" + userType + ", isActive=" + isActive
+				+ "]";
+	}
+	
+	
 	
 }

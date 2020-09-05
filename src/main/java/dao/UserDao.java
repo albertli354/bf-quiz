@@ -4,6 +4,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.LinkedList;
+import java.util.List;
+
+import javax.persistence.Query;
+
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import domain.User;
 
@@ -71,5 +78,28 @@ public class UserDao {
 			e.printStackTrace();
 		} 
         return userID;
+	}
+	
+	// get all users 
+	public List<User> getAllUsers() {
+		List<User> result = new LinkedList<>();
+		Session session = HibernateConfigUtil.openSession();
+		Transaction transaction = null;
+		try {
+			transaction = session.beginTransaction();
+			String hql = "from User";
+			Query query = session.createQuery(hql);
+			result = ((org.hibernate.query.Query) query).list();
+			transaction.commit();
+			
+		} catch (Exception e) {
+			if (transaction != null) {
+				transaction.rollback();
+			}
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+		return result;
 	}
 }
