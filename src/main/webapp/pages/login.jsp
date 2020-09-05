@@ -42,7 +42,7 @@
             >
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="pages/signup.jsp">Signup</a>
+            <a class="nav-link" href="/quiz/pages/signup.jsp">Register</a>
           </li>
           </c:if>
         </ul>
@@ -50,6 +50,9 @@
           <c:if test='${not empty sessionScope.user}'>
 	          <li class="nav-item">
 	            <a class="nav-link" href="#">${sessionScope.user}</a>
+	          </li>
+	          <li class="nav-item">
+	            <a class="nav-link" href="/quiz/LogoutServlet">Logout</a>
 	          </li>
        		</c:if>
         </ul>

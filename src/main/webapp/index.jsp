@@ -37,14 +37,22 @@
             >
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="pages/signup.jsp">Signup</a>
+            <a class="nav-link" href="pages/signup.jsp">Register</a>
           </li>
+          </c:if>
+          <c:if test='${not empty sessionScope.user and sessionScope.user == "admin"}'>
+          <li class="nav-item">
+            <a class="nav-link" href="pages/admin.jsp"
+              >Admin Portal</a>
           </c:if>
         </ul>
         <ul class="navbar-nav ml-auto">
           <c:if test='${not empty sessionScope.user}'>
 	          <li class="nav-item">
 	            <a class="nav-link" href="#">${sessionScope.user}</a>
+	          </li>
+	          <li class="nav-item">
+	            <a class="nav-link" href="LogoutServlet">Logout</a>
 	          </li>
        		</c:if>
         </ul>
@@ -157,6 +165,7 @@
         </div>
       </div>
     </main>
+   
     <!-- script import -->
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script

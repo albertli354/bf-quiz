@@ -36,12 +36,12 @@
         <ul class="navbar-nav mr-auto">
          <c:if test='${empty sessionScope.user}'>
           <li class="nav-item">
-            <a class="nav-link" href="pages/login.jsp"
+            <a class="nav-link" href="/quiz/pages/login.jsp"
               >Login <span class="sr-only">(current)</span></a
             >
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="pages/signup.jsp">Signup</a>
+            <a class="nav-link" href="#">Register</a>
           </li>
           </c:if>
         </ul>
@@ -49,6 +49,9 @@
           <c:if test='${not empty sessionScope.user}'>
 	          <li class="nav-item">
 	            <a class="nav-link" href="#">${sessionScope.user}</a>
+	          </li>
+	          <li class="nav-item">
+	            <a class="nav-link" href="/quiz/LogoutServlet">Logout</a>
 	          </li>
        		</c:if>
         </ul>
