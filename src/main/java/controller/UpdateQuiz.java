@@ -24,6 +24,7 @@ public class UpdateQuiz extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	QuizDao quizDao;
 	QuizResultDao quizResultDao;
+	
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -70,8 +71,8 @@ public class UpdateQuiz extends HttpServlet {
 			// set grade
 			session.setAttribute("grade", grade);
 			// insert quiz result to database
-			
-//			quizResultDao.add(currentQuiz);
+			quizResultDao = new QuizResultDao();
+			quizResultDao.addResult(currentQuiz, grade);
 		}
 		
 		

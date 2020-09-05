@@ -11,5 +11,6 @@
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
         
         <mapping class="domain.User"/>
+        <mapping class="domain.QuizResult"/>
     </session-factory>
 </hibernate-configuration>

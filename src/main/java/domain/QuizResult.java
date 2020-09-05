@@ -19,7 +19,7 @@ public class QuizResult {
 	@Column(name = "quizCategory")
 	private String quizCategory;
 	
-	@Column(name = "quizCategory")
+	@Column(name = "userID")
 	private int userID;
 	
 	@Column(name = "grade")
@@ -33,7 +33,6 @@ public class QuizResult {
 	}
 
 	public QuizResult(int quizID, String timeTaken, String quizCategory, int userID, int grade) {
-		super();
 		this.quizID = quizID;
 		this.timeTaken = timeTaken;
 		this.quizCategory = quizCategory;

@@ -78,7 +78,7 @@ public class ExamServlet extends HttpServlet {
 			// pass time
 			long now = System.currentTimeMillis();
 			long end = now + TimeUnit.MINUTES.toMillis(10);
-			SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			String currentTime = formatter.format(now);
 			String endTime = formatter.format(end);
 

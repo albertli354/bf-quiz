@@ -123,6 +123,14 @@ public class Quiz {
 	public Map<Integer, Integer> getCorrectAnswers() {
 		return correctAnswers;
 	}
+
+	public int getUserID() {
+		return userID;
+	}
+
+	public int getQuizID() {
+		return quizID;
+	}
 	
 	
 	
