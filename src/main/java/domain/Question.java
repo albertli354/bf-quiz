@@ -1,48 +1,48 @@
 package domain;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "question")
 public class Question {
-	private String question;
-	private String questionChoice[];
-	private int correctQuestionIndex;
-	private int userChoiceIndex = -1;
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "questionID")
+	private int questionID;
 	
+	@Column(name = "quizType")
+	private String quizType;
 	
-	
-	
-	
-	
-	// getter and setter
-	public String getQuestion() {
-		return question;
-	}
-	
-	public void setQuestion(String question) {
-		this.question = question;
-	}
-	
-	public String[] getQuestionChoice() {
-		return questionChoice;
-	}
-	
-	public void setQuestionChoice(String[] questionChoice) {
-		this.questionChoice = questionChoice;
-	}
-	
-	public int getCorrectQuestionIndex() {
-		return correctQuestionIndex;
-	}
-	
-	public void setCorrectQuestionIndex(int correctQuestionIndex) {
-		this.correctQuestionIndex = correctQuestionIndex;
-	}
-	
-	public int getUserChoiceIndex() {
-		return userChoiceIndex;
-	}
-	
-	public void setUserChoiceIndex(int userChoiceIndex) {
-		this.userChoiceIndex = userChoiceIndex;
+	@Column(name = "questionContent")
+	private String questionContent;
+
+	public Question() {
+		super();
 	}
 
+	public int getQuestionID() {
+		return questionID;
+	}
+
+	public String getQuizType() {
+		return quizType;
+	}
+
+	public String getQuestionContent() {
+		return questionContent;
+	}
+
+	@Override
+	public String toString() {
+		return "Question [questionID=" + questionID + ", quizType=" + quizType + ", questionContent=" + questionContent
+				+ "]";
+	}
+	
+	
 }

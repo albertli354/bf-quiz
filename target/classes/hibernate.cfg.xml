@@ -12,5 +12,6 @@
         
         <mapping class="domain.User"/>
         <mapping class="domain.QuizResult"/>
+        <mapping class="domain.Question"/>
     </session-factory>
 </hibernate-configuration>
