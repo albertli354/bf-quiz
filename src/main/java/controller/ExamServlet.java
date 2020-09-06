@@ -95,7 +95,7 @@ public class ExamServlet extends HttpServlet {
 			// create Quiz object
 			Quiz currentQuiz = new Quiz(quizType, currentTime, endTime, userID, quizID, 
 					questionMap, choiceMap, questionChoice, currentQuestionIndex,
-					userChoice, correctAnswers);
+					userChoice, correctAnswers,userName);
 			
 			
 

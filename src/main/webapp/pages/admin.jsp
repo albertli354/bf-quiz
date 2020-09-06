@@ -70,12 +70,12 @@
       <div class="col-md-4">
         <h2>Quizzes</h2>
         <p>Checking all quizzes and detailed results of them.</p>
-        <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+        <p><a class="btn btn-secondary" href="/quiz/AdminQuizServlet" role="button">View details &raquo;</a></p>
       </div>
       <div class="col-md-4">
         <h2>Questions</h2>
         <p>Managing all questions here, including add/update/disable questions.</p>
-        <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+        <p><a class="btn btn-secondary" href="/quiz/AdminQuestionServlet" role="button">View details &raquo;</a></p>
       </div>
     </div>
 

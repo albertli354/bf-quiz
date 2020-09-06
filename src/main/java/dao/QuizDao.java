@@ -21,7 +21,9 @@ public class QuizDao {
 	private final static String NEW_QUIZ = "insert into quiz (userID, questionID, quizType, startTime, choiceID, quizID) values (?,?,?,?,?,?)";
 	private final static String MAX_ID = "select max(quizID) from quiz";
 	private final static String CORRECT_ANSWER = "select choice_id from choice where questionID = ? and isCorrect = 1";
-	
+	private final static String GET_QUESTION_ID = "select distinct questionID from quiz where quizID = ?";
+	private final static String GET_QUESTION_TITLE = "select questionContent from question where questionID = ?";
+	private final static String GET_USER_CHOICE = "select distinct userChoiceID from quiz where quizID = ? and questionID = ?";
 	Connection connection = DBConnection.getConnection();
 	
 	public Map<Integer, String> getQuestionMap(Quiz quiz) {
@@ -45,6 +47,8 @@ public class QuizDao {
 		} 
 		return questionMap;
 	}
+	
+	
 	
 	@SuppressWarnings("null")
 	public Map<Integer, String> getChoiceMap(Map<Integer, String> questionMap) {
@@ -216,6 +220,73 @@ public class QuizDao {
 			}
 		}
 		
+		return resultMap;
+	}
+	
+	public Map<Integer, String> getAdminQuestionMap(int quizID) {
+		Map<Integer, String> resultMap = new HashMap<>();
+		LinkedList<Integer> questionIDs = new LinkedList<>();
+		PreparedStatement preparedStatement = null;
+		try {
+			preparedStatement = connection.prepareStatement(GET_QUESTION_ID);
+			preparedStatement.setInt(1, quizID);
+			boolean result = preparedStatement.execute();
+			if (result) {
+				ResultSet resultSet = preparedStatement.getResultSet();
+				while (resultSet.next()) {
+					int questionID = resultSet.getInt(1);
+					questionIDs.add(questionID);
+				}
+				resultSet.close();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} 
+		
+		// build question map
+		for (int questionID : questionIDs) {
+			preparedStatement = null;
+			try {
+				preparedStatement = connection.prepareStatement(GET_QUESTION_TITLE);
+				preparedStatement.setInt(1, questionID);
+				boolean result = preparedStatement.execute();
+				if (result) {
+					ResultSet resultSet = preparedStatement.getResultSet();
+					while (resultSet.next()) {
+						String questionContent = resultSet.getString(1);
+						resultMap.put(questionID, questionContent);
+					}
+					resultSet.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} 
+		}
+		return resultMap;
+	}
+	
+	public Map<Integer, Integer>  getUserChoice(int quizID, Map<Integer, String> questionMap) {
+		Map<Integer, Integer> resultMap = new HashMap<>();
+		PreparedStatement preparedStatement = null;
+		for (int questionID : questionMap.keySet()) {
+			preparedStatement = null;
+			try {
+				preparedStatement = connection.prepareStatement(GET_USER_CHOICE);
+				preparedStatement.setInt(1, quizID);
+				preparedStatement.setInt(2, questionID);
+				boolean result = preparedStatement.execute();
+				if (result) {
+					ResultSet resultSet = preparedStatement.getResultSet();
+					while (resultSet.next()) {
+						int userChoice = resultSet.getInt(1);
+						resultMap.put(questionID, userChoice);
+					}
+					resultSet.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 		return resultMap;
 	}
 	

@@ -22,11 +22,15 @@ public class Quiz {
 	private int[] questionID;
 	
 
-	// getters and setters
 	
+	
+	public Quiz() {
+
+	}
+
 	public Quiz(String quizType, String startTime, String endTime, int userID, int quizID, Map<Integer, String> questionMap,
 			Map<Integer, String> choiceMap, Map<Integer, LinkedList<Integer>> questionChoice, int currentQuestionIndex,
-			Map<Integer, Integer> userChoice, Map<Integer, Integer> correctAnswers) {
+			Map<Integer, Integer> userChoice, Map<Integer, Integer> correctAnswers, String userName) {
 		this.quizType = quizType;
 		this.startTime = startTime;
 		this.endTime = endTime;
@@ -38,12 +42,10 @@ public class Quiz {
 		this.currentQuestionIndex = currentQuestionIndex;
 		this.userChoice = userChoice;
 		this.correctAnswers = correctAnswers;
-		
+		this.userName = userName;
 		// initialize all choice to -1
 		// 5 means 5 questions
-		for (int questionID : questionMap.keySet()) {
-			userChoice.put(questionID, -1);
-		}
+
 
 		
 		// initialize quesitonIndex
@@ -130,6 +132,10 @@ public class Quiz {
 
 	public int getQuizID() {
 		return quizID;
+	}
+
+	public String getUserName() {
+		return userName;
 	}
 	
 	
