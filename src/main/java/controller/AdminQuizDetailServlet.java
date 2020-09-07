@@ -34,20 +34,9 @@ public class AdminQuizDetailServlet extends HttpServlet {
 		Map<Integer, LinkedList<Integer>> questionChoice = quizDao.getMapping(questionMap);
 		Map<Integer, Integer> correctAnswers = quizDao.getCorrectAnswers(questionMap);
 		Map<Integer, Integer> userChoice = quizDao.getUserChoice(quizID, questionMap);
-		for (int key : userChoice.keySet()) {
-			System.out.println("the question id is " + key);
-			System.out.println("the user choice id is " + userChoice.get(key));
-			System.out.println();
-		}
-		System.out.println("********************");
 		Quiz quiz = new Quiz("", time, time, -1, quizID, 
 				questionMap, choiceMap, questionChoice, -1,
 				userChoice, correctAnswers,username);
-		for (int key : quiz.getUserChoice().keySet()) {
-			System.out.println("the question id is " + key);
-			System.out.println("the user choice id is " + userChoice.get(key));
-			System.out.println();
-		}
 		request.setAttribute("currentQuiz", quiz);
 		request.setAttribute("grade", grade);
 		request.setAttribute("quizID", quizID);

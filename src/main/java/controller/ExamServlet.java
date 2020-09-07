@@ -58,7 +58,6 @@ public class ExamServlet extends HttpServlet {
         }
 		
 		// insert a new quiz
-//		System.out.println(userID);
 		Quiz quiz = new Quiz(quizType, userID);
 		try {
 			// get question set
